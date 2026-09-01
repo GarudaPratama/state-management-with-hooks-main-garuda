@@ -1,18 +1,31 @@
-import React from 'react';
-import { useReview } from '../context/ReviewContext';
+import { useContext } from 'react';
+import { Input } from './ui/input';
+import { ReviewContext } from '@/context/ReviewContext';
 
-export default function Navbar() {
-  const { state } = useReview();
+function Navbar() {
+  const { username, setUsername } = useContext(ReviewContext);
 
   return (
-    <nav className="bg-emerald-500 text-white px-6 py-4 rounded-2xl shadow-lg mb-8 flex justify-between items-center">
-      <div className="flex items-center gap-2">
-        
-        <h1 className="text-lg font-bold tracking-wide">AdzReview</h1>
+    <nav className='flex shadow-sm justify-between items-center py-3 px-5 border-b bg-background transition-colors'>
+      <div>
+        <div className='flex items-center gap-2'>
+          <h1 className='font-bold text-lg'>Review App</h1>
+        </div>
+        <p className='text-[11px] text-muted-foreground'>
+          Halo, {username || 'Masukkan nama anda'}!
+        </p>
       </div>
-      <div className="bg-indigo-700/60 px-4 py-1.5 rounded-full text-sm backdrop-blur-sm border border-indigo-400/30">
-        Pengulas: <span className="font-semibold text-emerald-300">{state.userName || 'Anonim'}</span>
+
+      <div className='w-64'>
+        <Input
+          type='text'
+          placeholder='Masukkan username...'
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
       </div>
     </nav>
   );
 }
+
+export default Navbar;

@@ -1,61 +1,58 @@
-import React, { createContext, useReducer, useContext } from 'react';
+import { createContext, useReducer, useState } from 'react';
 
-const initialState = {
-  userName: '',
-  item: '',
-  comment: '',
-  error: '',
-  isLoading: false,
-  isSuccess: false,
-  reviews: [], 
-};
+const ReviewContext = createContext(null);
 
 function reviewReducer(state, action) {
   switch (action.type) {
-    case 'SET_USER_NAME':
-      return { ...state, userName: action.payload };
-    case 'SET_ITEM':
-        return {...state, item: action.payload};
-    case 'SET_COMMENT':
-      return { ...state, comment: action.payload };
-    case 'SUBMIT_START':
-      return { ...state, isLoading: true, error: '', isSuccess: false };
-    case 'SUBMIT_SUCCESS':
-      const newReview = {
-        id: Date.now(),
-        userName: state.userName.trim() || 'Anonim',
-        item: state.item.trim(),
-        comment: state.comment.trim(),
-        date: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }),
-      };
+    case 'SET_FIELD':
       return {
         ...state,
-        isLoading: false,
-        isSuccess: true,
-        error: '',
-        comment: '', 
-        item: '',
-        reviews: [newReview, ...state.reviews], 
+        [action.field]: action.value,
+        isSuccess: false,
+        isError: false,
       };
-    case 'SUBMIT_ERROR':
-      return { ...state, isLoading: false, isSuccess: false, error: action.payload };
+    case 'SUCCESS':
+      return {
+        ...state,
+        isSuccess: true,
+        isError: false,
+        name: '',
+        review: '',
+      };
+    case 'ERROR':
+      return {
+        ...state,
+        isSuccess: false,
+        isError: true,
+      };
     default:
       return state;
   }
 }
 
-const ReviewContext = createContext();
-
-export function ReviewProvider({ children }) {
-  const [state, dispatch] = useReducer(reviewReducer, initialState);
+function ReviewProvider({ children }) {
+  const [reviewData, setReviewData] = useState(null);
+  const [username, setUsername] = useState('');
+  const [state, dispatch] = useReducer(reviewReducer, {
+    name: '',
+    review: '',
+    isSuccess: false,
+    isError: false,
+  });
 
   return (
-    <ReviewContext.Provider value={{ state, dispatch }}>
+    <ReviewContext.Provider
+      value={{
+        state,
+        dispatch,
+        username,
+        setUsername,
+        reviewData,
+        setReviewData,
+      }}>
       {children}
     </ReviewContext.Provider>
   );
 }
 
-export function useReview() {
-  return useContext(ReviewContext);
-}
+export { ReviewContext, ReviewProvider };
