@@ -1,9 +1,17 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Input } from './ui/input';
+import { useProfile } from '../stores/useProfile';
 import { ReviewContext } from '@/context/ReviewContext';
 
 function Navbar() {
-  const { username, setUsername } = useContext(ReviewContext);
+  
+  // bisa, tidak direkomendasikan
+  // const { username, setUsername } = useProfile();
+
+  // direkomendasikan
+  const username = useProfile((state) => state.username);
+  const setUsername = useProfile((state) => state.setUsername);
+
 
   return (
     <nav className='flex shadow-sm justify-between items-center py-3 px-5 border-b bg-background transition-colors'>

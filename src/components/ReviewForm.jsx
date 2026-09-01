@@ -4,9 +4,16 @@ import { Textarea } from './ui/textarea';
 import { ReviewContext } from '@/context/ReviewContext';
 import { Button } from './ui/button';
 import { Label } from './ui/label';
+import { useData } from '../stores/useData';
+import { useName } from '../stores/useName';
+import { useState } from 'react'; 
 
 function ReviewForm() {
-  const { state, dispatch, setReviewData } = useContext(ReviewContext);
+  
+  // const { state, dispatch } = useContext(ReviewContext);
+  const setReviewData = useData((state) => state.setUsername);
+  const name = useName((state) => state.name);
+  const setName = useName((state) => state.setName);
 
   const handleSubmit = (e) => {
     e.preventDefault();
