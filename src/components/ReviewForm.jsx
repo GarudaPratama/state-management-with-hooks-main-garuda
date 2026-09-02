@@ -7,26 +7,52 @@ import { Label } from './ui/label';
 import { useData } from '../stores/useData';
 import { useName } from '../stores/useName';
 import { useState } from 'react'; 
+import { useShallow } from 'zustand/shallow';
 
 function ReviewForm() {
   
-  // const { state, dispatch } = useContext(ReviewContext);
-  const setReviewData = useData((state) => state.setUsername);
-  const name = useName((state) => state.name);
-  const setName = useName((state) => state.setName);
+  
+  // const setReviewData = useData((state) => state.setReviewData);
+
+
+  // const name = useData((state) => state.name);
+  // const review = useData((state) => state.review);
+  // const isSuccess = useData((state) => state.isSuccess);
+  // const isError = useData((state) => state.isError);
+
+  // const setName = useData((state) => state.setName);
+  // const setReview = useData((state) => state.setReview);
+  // const setIsError = useData((state) => state.setIsError);
+  // const setIsSuccess = useData((state) => state.setIsSuccess);
+  
+  const {
+    name,
+    review,
+    isSuccess,
+    isError,
+  } = useData(useShallow((state) => ({
+    name: state.name,
+    review: state.review,
+    isSuccess: state.isSuccess,
+    isError: state.isError,
+  })))
+
+  const { setName, setReview, setIsError, setIsSuccess, setReviewData } = useData((state) => state.actions)
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!state?.review || state.review.length <= 5) {
-      dispatch({ type: 'ERROR' });
+    if (!review || review.length <= 5) {
+      setIsError(true);
       return;
     }
 
-    dispatch({ type: 'SUCCESS' });
+    setIsSuccess(true);
+    setIsError(false);
     setReviewData({
-      name: state.name,
-      review: state.review,
+      name: name,
+      review: review,
     });
   };
 
@@ -38,7 +64,7 @@ function ReviewForm() {
         <h1 className='font-bold text-lg'>Formulir Ulasan Produk</h1>
       </div>
 
-      {state.isSuccess && (
+      {isSuccess && (
         <p className='text-green-500 text-sm mt-2 font-medium'>
           Review Berhasil Dikirim!
         </p>
@@ -49,30 +75,18 @@ function ReviewForm() {
           <Label>Nama Produk</Label>
           <Input
             type='text'
-            value={state.name}
-            onChange={(e) =>
-              dispatch({
-                type: 'SET_FIELD',
-                field: 'name',
-                value: e.target.value,
-              })
-            }
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
 
         <div>
           <Label>Komentar</Label>
           <Textarea
-            value={state.review}
-            onChange={(e) =>
-              dispatch({
-                type: 'SET_FIELD',
-                field: 'review',
-                value: e.target.value,
-              })
-            }
+            value={review}
+            onChange={(e) => setReview(e.target.value)}
           />
-          {state.isError && (
+          {isError && (
             <p className='text-red-500 text-sm mt-2'>
               Komentar harus lebih dari 5 karakter
             </p>
