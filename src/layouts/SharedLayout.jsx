@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from "react-router";
-import { useProfile } from "@/stores/useProfile";
+import { useProfile } from "@/stores/UseProfile";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 export default function SharedLayout() {

@@ -1,6 +1,6 @@
 import { Link } from "react-router";
-import { useProfile } from "@/stores/useProfile";
-import { useStats } from "@/stores/useStats";
+import { useProfile } from "@/stores/UseProfile";
+import { useStats } from "@/stores/UseStats";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

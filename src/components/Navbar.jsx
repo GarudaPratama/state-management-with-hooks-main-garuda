@@ -1,4 +1,4 @@
-import { useProfile } from "@/stores/useProfile";
+import { useProfile } from "@/stores/UseProfile";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useProfile } from "@/stores/useProfile";
-import { useStats } from "@/stores/useStats";
+import { useProfile } from "@/stores/UseProfile";
+import { useStats } from "@/stores/UseStats";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

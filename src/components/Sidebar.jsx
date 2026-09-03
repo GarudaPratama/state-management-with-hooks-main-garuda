@@ -1,5 +1,5 @@
 import { NavLink } from "react-router";
-import { useProfile } from "@/stores/useProfile";
+import { useProfile } from "@/stores/UseProfile";
 import {
   Sidebar,
   SidebarContent,
