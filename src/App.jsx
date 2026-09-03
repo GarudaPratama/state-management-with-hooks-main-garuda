@@ -1,21 +1,10 @@
-import Navbar from './components/Navbar';
-import ReviewCard from './components/ReviewCard';
-import ReviewForm from './components/ReviewForm';
+import { Outlet } from 'react-router-dom';
 import { ReviewProvider } from './context/ReviewContext';
 
-function App() {
+export default function App() {
   return (
-    <div className='flex flex-col gap-10 min-h-screen pb-10'>
-      <ReviewProvider>
-        <Navbar />
-
-        <main className='flex flex-col gap-6 max-w-300 mx-auto px-4 w-full'>
-          <ReviewCard />
-          <ReviewForm />
-        </main>
-      </ReviewProvider>
-    </div>
+    <ReviewProvider>
+      <Outlet />
+    </ReviewProvider>
   );
 }
-
-export default App;

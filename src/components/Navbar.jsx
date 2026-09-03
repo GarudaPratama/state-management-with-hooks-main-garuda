@@ -1,39 +1,30 @@
-import { useContext, useState } from 'react';
-import { Input } from './ui/input';
-import { useProfile } from '../stores/useProfile';
-import { ReviewContext } from '@/context/ReviewContext';
+import { useProfile } from "@/stores/useProfile";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
-function Navbar() {
-  
-  // bisa, tidak direkomendasikan
-  // const { username, setUsername } = useProfile();
+export default function Navbar() {
+  const { name } = useProfile();
 
-  // direkomendasikan
-  const username = useProfile((state) => state.username);
-  const setUsername = useProfile((state) => state.setUsername);
-
+  const getInitials = (str) => {
+    return str ? str.substring(0, 2).toUpperCase() : "U";
+  };
 
   return (
-    <nav className='flex shadow-sm justify-between items-center py-3 px-5 border-b bg-background transition-colors'>
-      <div>
-        <div className='flex items-center gap-2'>
-          <h1 className='font-bold text-lg'>Review App</h1>
-        </div>
-        <p className='text-[11px] text-muted-foreground'>
-          Halo, {username || 'Masukkan nama anda'}!
-        </p>
+    <header className="h-16 bg-background border-b px-4 flex items-center justify-between sticky top-0 z-10">
+      <div className="flex items-center gap-2">
+        {/* Tombol Toggle Sidebar Shadcn */}
+        <SidebarTrigger />
+        <h1 className="text-lg font-bold tracking-tight text-slate-800">
+          Portal Dashboard
+        </h1>
       </div>
 
-      <div className='w-64'>
-        <Input
-          type='text'
-          placeholder='Masukkan username...'
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+      <div className="flex items-center gap-3">
+        <Avatar className="h-9 w-9 bg-primary text-primary-foreground font-semibold">
+          <AvatarFallback>{getInitials(name)}</AvatarFallback>
+        </Avatar>
+        <span className="font-medium text-sm text-slate-700">{name}</span>
       </div>
-    </nav>
+    </header>
   );
 }
-
-export default Navbar;
