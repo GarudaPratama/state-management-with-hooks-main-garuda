@@ -12,7 +12,7 @@ export default function DashboardPage() {
       {/* Greeting Card */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">Halo, {name}! 👋</CardTitle>
+          <CardTitle className="text-2xl font-semibold">Halo, {name}! 👋</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-slate-600">{bio}</p>
