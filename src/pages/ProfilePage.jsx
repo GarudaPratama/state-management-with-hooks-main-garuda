@@ -36,7 +36,7 @@ export default function ProfilePage() {
             <p className="text-lg font-bold">{totalProjects}</p>
           </div>
           <div>
-            <p className="text-xs text-slate-500">Tugas</p>
+            <p className="text-xs text-slate-500">Tugas Selesai</p>
             <p className="text-lg font-bold">{completedTasks}</p>
           </div>
           <div>
