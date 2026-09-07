@@ -4,6 +4,7 @@ import DashboardPage from "@/pages/DashboardPage";
 import ProfilePage from "@/pages/ProfilePage";
 import EditProfilePage from "@/pages/EditProfilePage";
 import StatsPage from "@/pages/StatsPage";
+import LoginForm from "@/pages/LoginForm";
 
 export const myRouter = createBrowserRouter([
   {
@@ -16,4 +17,8 @@ export const myRouter = createBrowserRouter([
       { path: "stats", element: <StatsPage /> },
     ],
   },
+  {
+    path: "/login",
+    element: <LoginForm />,
+  }
 ]);
