@@ -6,6 +6,7 @@ import EditProfilePage from "@/pages/EditProfilePage";
 import StatsPage from "@/pages/StatsPage";
 import LoginForm from "@/pages/LoginForm";
 import FormLogin from "@/pages/FormLogin";
+import EmployeeForm from "@/pages/EmployeeFormExercise";
 
 export const myRouter = createBrowserRouter([
   {
@@ -25,5 +26,9 @@ export const myRouter = createBrowserRouter([
   {
     path: "/formlogin",
     element: <FormLogin />,
+  },
+  {
+    path: "/employeeform",
+    element: <EmployeeForm />,
   }
 ]);
