@@ -1,15 +1,32 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { useForm } from "react-hook-form";
 
 function EmployeeFormExercise() {
 
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit, setValues, formState: { errors }, reset, trigger } = useForm({
       mode: 'onChange'
     });
 
     const onSave = (data) => {
         console.log(data);
+        reset();
     }
+
+    useEffect(() => {
+      setValues({
+        name: 'Muhammad Garuda Pratama',
+        address: 'Tangerang Selatan',
+        phone: '081279265845',
+        nik: '1234567890123456',
+        job: 'Pegawai Swasta',
+        status: 'menikah',
+        age: 24,
+        password: 'Garuda281209.'
+      })
+
+      trigger();
+    }, [])
 
   return (
     <section className="min-h-screen w-full flex justify-center items-center py-10 px-4">
@@ -136,7 +153,7 @@ function EmployeeFormExercise() {
 
         {errors.status && <p className="text-red-500 text-xs mt-1">{errors.status.message}</p>}
 
-        {/* Field 3: Nomor Telepon */}
+        {/* Field 7: Umur */}
         <div>
           <label htmlFor="age" className="block text-sm font-medium text-gray-700 mb-1">
             Umur
@@ -155,6 +172,26 @@ function EmployeeFormExercise() {
         </div>
 
         {errors.age && <p className="text-red-500 text-xs mt-1">{errors.age.message}</p>}
+
+        {/* Field 8: Password */}
+        <div>
+          <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+            Password
+          </label>
+          <input
+            {...register("password", {
+                required: 'Password harus diisi',
+                minLength: { value: 8, message: 'Minimal 8 karakter' },
+                pattern: {value: /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/, message: 'Password harus mengandung huruf besar, angka, dan karakter khusus'}
+            })}
+            id="password"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            type="text"
+            placeholder="Masukkan password"
+          />
+        </div>
+
+        {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
 
         <button
           className="w-full flex justify-center py-2 px-4 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition"
