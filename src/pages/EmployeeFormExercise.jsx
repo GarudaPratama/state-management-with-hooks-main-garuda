@@ -3,7 +3,9 @@ import { useForm } from "react-hook-form";
 
 function EmployeeFormExercise() {
 
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm({
+      mode: 'onChange'
+    });
 
     const onSave = (data) => {
         console.log(data);
@@ -22,7 +24,8 @@ function EmployeeFormExercise() {
           <input
             {...register("name", {
                 required: 'Nama harus diisi',
-                minLength: { value: 5, message: 'Minimal 5 karakter' }
+                minLength: { value: 5, message: 'Minimal 5 karakter' },
+                maxLength: { value: 50, message: 'Maksimal 50 karakter' }
             })}
             id="name"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -30,6 +33,8 @@ function EmployeeFormExercise() {
             placeholder="Masukkan nama lengkap"
           />
         </div>
+
+        {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
 
         {/* Field 2: Alamat (Textarea) */}
         <div>
@@ -48,6 +53,8 @@ function EmployeeFormExercise() {
           />
         </div>
 
+        {errors.address && <p className="text-red-500 text-xs mt-1">{errors.address.message}</p>}
+
         {/* Field 3: Nomor Telepon */}
         <div>
           <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
@@ -56,7 +63,8 @@ function EmployeeFormExercise() {
           <input
             {...register("phone", {
                 required: 'Nomor telepon harus diisi',
-                minLength: { value: 10, message: 'Minimal 10 karakter' }
+                minLength: { value: 11, message: 'Minimal 10 karakter' },
+                maxLength: { value: 13, message: 'Maksimal 13 karakter' }
             })}
             id="phone"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -64,6 +72,8 @@ function EmployeeFormExercise() {
             placeholder="Contoh: 08123456789"
           />
         </div>
+
+        {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
 
         {/* Field 4: NIK */}
         <div>
@@ -73,6 +83,8 @@ function EmployeeFormExercise() {
           <input
             {...register("nik", {
                 required: 'NIK harus diisi',
+                minLength: { value: 16, message: 'Harus 16 karakter' },
+                maxLength: { value: 16, message: 'Harus 16 Karakter'}
             })}
             id="nik"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -80,6 +92,8 @@ function EmployeeFormExercise() {
             placeholder="Nomor Induk Kependudukan"
           />
         </div>
+
+        {errors.nik && <p className="text-red-500 text-xs mt-1">{errors.nik.message}</p>}
 
         {/* Field 5: Pekerjaan (Select) */}
         <div>
@@ -94,17 +108,21 @@ function EmployeeFormExercise() {
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">Pilih Pekerjaan</option>
-            <option value="pns">PNS</option>
-            <option value="swasta">Pegawai Swasta</option>
+            <option value="PNS">PNS</option>
+            <option value="Pegawai Swasta">Pegawai Swasta</option>
           </select>
         </div>
+
+        {errors.job && <p className="text-red-500 text-xs mt-1">{errors.job.message}</p>}
 
         {/* Field 6: Status (Radio Button) */}
         <div>
           <span className="block text-sm font-medium text-gray-700 mb-1">
             Status Pernikahan
           </span>
-          <div className="flex space-x-4 mt-2">
+          <div className="flex space-x-4 mt-2" {...register("status", {
+            required: 'Status pernikahan harus diisi',
+          })}>
             <label className="flex items-center space-x-2 cursor-pointer">
               <input type="radio" name="status" value="menikah" {...register("status")} />
               <span className="text-sm text-gray-700">Menikah</span>
@@ -115,6 +133,28 @@ function EmployeeFormExercise() {
             </label>
           </div>
         </div>
+
+        {errors.status && <p className="text-red-500 text-xs mt-1">{errors.status.message}</p>}
+
+        {/* Field 3: Nomor Telepon */}
+        <div>
+          <label htmlFor="age" className="block text-sm font-medium text-gray-700 mb-1">
+            Umur
+          </label>
+          <input
+            {...register("age", {
+                required: 'Umur harus diisi',
+                min: { value: 1, message: 'Minimal 1 tahun' },
+                max: { value: 63, message: 'Maksimal 63 tahun' }
+            })}
+            id="age"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            type="number"
+            placeholder="Contoh: 17"
+          />
+        </div>
+
+        {errors.age && <p className="text-red-500 text-xs mt-1">{errors.age.message}</p>}
 
         <button
           className="w-full flex justify-center py-2 px-4 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition"
